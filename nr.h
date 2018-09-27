@@ -416,6 +416,7 @@ float rtnewt(void (*funcd)(float, float *, float *), float x1, float x2,
 float rtsafe(void (*funcd)(float, float *, float *), float x1, float x2,
 	float xacc);
 float rtsec(float (*func)(float), float x1, float x2, float xacc);
+float rtmuller(float (*func)(float), float x1, float x2, float xacc);
 void rzextr(int iest, float xest, float yest[], float yz[], float dy[], int nv);
 void savgol(float c[], int np, int nl, int nr, int ld, int m);
 void score(float xf, float y[], float f[]);
@@ -815,6 +816,7 @@ float rtflsp();
 float rtnewt();
 float rtsafe();
 float rtsec();
+float rtmuller();
 void rzextr();
 void savgol();
 void score();

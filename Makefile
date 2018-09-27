@@ -1,8 +1,8 @@
 CC = gcc
-CFLAGS = -W -Wall 
+CFLAGS = -W -Wall -g 
 TARGET = hw3
 
-$(TARGET) : hw3.o bessj0.o bessj1.o nrutil.o rtbis.o rtflsp.o rtnewt.o rtsafe.o rtsec.o zbrak.o
+$(TARGET) : hw3.o bessj0.o bessj1.o nrutil.o rtbis.o rtflsp.o rtnewt.o rtsafe.o rtsec.o zbrak.o rtmuller.o
 			 $(CC) $(CFLAGS) -o $@ $^ -lm
 
 hw3.o : hw3.c
@@ -34,6 +34,9 @@ rtsec.o : rtsec.c
 
 zbrak.o : zbrak.c
 		$(CC) $(CFLAGS) -c -o $@ $^
+
+rtmuller.o : rtmuller.c
+		$(CC) $(CFLAGS) -c -o $@ $^ -lm
 
 clean :
 		rm *.o 

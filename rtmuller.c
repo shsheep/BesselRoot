@@ -19,44 +19,31 @@ float rtmuller(float (*func)(float), float x1, float x2, float xacc)
 {
 	void nrerror(char error_text[]);
 	int j;
-	float fl,fh,xl,xh,swap,del,f,rtf, xm, fm, a, b, c; //dx
+	float fl,fh,xl,xh,f,rtf, dx, xm, fm, a, b, c;
 
-	xm = (x1+x2)/2.0;
+	xl = x1;
+	xm = x1+2.0;//(x1+x2)/2.0; // set initial third point
+	xh = x2;
 	fl=(*func)(x1);
 	fm = (*func)(xm);
 	fh=(*func)(x2);
 
-
-	// if ( fh )
-	if (fl < 0.0) {
-		xl=x1;
-		xh=x2;
-	} else {
-		xl=x2;
-		`xh=x1;
-		swap=fl;
-		fl=fh;
-		fh=swap;
-	}
-	//dx=xh-xl;
 	for (j=1;j<=MAXIT;j++) {
 		c = fh;
 		b = set_muller_b((*func), xl, xm, xh);
 		a = set_muller_a((*func), xl, xm, xh);
-		rtf = xh - 2*c/(b+sgn(b)*sqrt(b*b-4*a*c));
-		f=(*func)(rtf);
-		if (f < 0.0) {
-			del=xl-rtf;
-			xl=rtf;
-			fl=f;
-		} else {
-			del=xh-rtf;
-			xh=rtf;
-			fh=f;
-		}
-		//dx=xh-xl;
-		xm = (xl + xh) / 2.0;
-		if (fabs(del) < xacc || f == 0.0) return rtf;
+		dx = (b > 0) ? -2*c/(b+sqrt(b*b-4*a*c)) : ( (b == 0 ) ? -2*c/(sqrt(-4*a*c)) : -2*c/(b-sqrt(b*b-4*a*c)) );
+		rtf = xh + dx;
+
+		// For Debug : printf("Before -> a : %e b : %e c : %e xl : %f xm : %f xh : %f dx : %f\n", a, b, c, xl, xm, xh, dx);
+		// only update f value to compare it with 0
+		f = (*func)(rtf);
+		xl = xm;
+		xm = xh;
+		xh = rtf;
+
+		// For Debug : printf("After -> xl : %f xm : %f xh : %f\n", xl, xm, xh);
+		if (fabs(dx) < xacc || f == 0.0) return rtf;
 	}
 	nrerror("Maximum number of iterations exceeded in rtmuller");
 	return 0.0;

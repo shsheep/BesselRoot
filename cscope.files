@@ -3,8 +3,11 @@
 ./bessj0.c
 ./nr.h
 ./rtsec.c
+./rtmuller.c
 ./zbrak.c
 ./xrtsec.c
+./test.c
+./hw3.c
 ./xrtflsp.c
 ./nrutil.c
 ./xrtnewt.c
