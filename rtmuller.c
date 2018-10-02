@@ -29,9 +29,11 @@ float rtmuller(float (*func)(float), float x1, float x2, float xacc)
 	fh=(*func)(x2);
 
 	for (j=1;j<=MAXIT;j++) {
+		// Set Muller constants
 		c = fh;
 		b = set_muller_b((*func), xl, xm, xh);
 		a = set_muller_a((*func), xl, xm, xh);
+		// Evaluate the Pn using Pn-1, Pn-2, Pn-3
 		dx = (b > 0) ? -2*c/(b+sqrt(b*b-4*a*c)) : ( (b == 0 ) ? -2*c/(sqrt(-4*a*c)) : -2*c/(b-sqrt(b*b-4*a*c)) );
 		rtf = xh + dx;
 
